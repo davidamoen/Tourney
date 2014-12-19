@@ -1,5 +1,5 @@
 var _board = {
-		name: 'B-Ball Simulator',
+		name: 'Promise POC',
 		canvas:  document.getElementById("grid"),
 		column1:  document.getElementById("division1"),
 		column2:  document.getElementById("division2"),
