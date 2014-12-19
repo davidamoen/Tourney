@@ -1,0 +1,43 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+	background: #006B00;  
+}
+
+a {
+  color: #00B7FF;
+}
+
+.container {
+	width: 1000px;
+	margin: 0 auto;
+}
+
+.column{
+	float: left;
+}
+
+#division1, #division2 {
+	background: #006B00;
+	color: #fff;
+}
+
+#grid {
+	background: #006B00;
+}
+
+#message {
+	background: #ededed;
+	margin-top: 10px;
+}
+.footer {
+	width: 100%;
+	text-align: center;
+}
+.footer button {
+	height: 50px;
+	width: 200px;
+	background: #fff;
+	font-size: 18px;
+	font-family: Arial Black;
+}

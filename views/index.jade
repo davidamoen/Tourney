@@ -1,0 +1,15 @@
+extends layout
+
+block content
+	.container
+		canvas(id='message', width='1000', height='30')
+		.column(id='column1')
+			canvas(id='division1',width="200", height="600")
+		.column(id='column2')
+			canvas(id='grid',width="600", height="600")
+		.column(id='column3')
+			canvas(id='division2',width="200", height="600")
+		.footer
+			button.btn#selectTeams Select Teams
+			button.btn#startBtn Start Season
+		
