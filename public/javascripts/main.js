@@ -23,18 +23,6 @@ var allTeams = [
 
 var teams = {heads: [], tails: [] };
 var schedule = [];
-/*
-var teams = {
-			heads: [{name: 'Minnesota', color: '#FFCC33', background: '#8C1919', image: 'minn-lg.png'}, 
-					{name: 'Michigan', color: '#FFF', background: '#18453B', image: 'mich-lg.png'}, 
-					{name: 'Northwestern', color: '#fff', background: '#520063', image: 'nw-lg.png'}],
-			tails: [
-					{name: 'Wisconsin', color: '#FFE100', background: '#000', image: 'wis-lg.png'}, 
-					{name: 'Penn State', color: '#fff', background: '#041E42', image: 'psu-lg.png'},
-					{name: 'Nebraska', color: '#B1946C', background: '#000', image: 'neb-lg.png'}]
-		};
-
-*/
 
 function setSchedule() {
 	schedule = [
