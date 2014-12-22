@@ -20,8 +20,6 @@ router.post('/saveHistory', function(req, res) {
 	var obj = req.body;
 	var fs = require('fs');
 
-	console.log(req.body);
-
 	fs.writeFile('data/history.js', JSON.stringify(req.body, null, 4), function(err, data) {
 		res.json({"success": "true"});
 	});
