@@ -17,7 +17,15 @@ var _game = {
 			game.home.championshipWins = 0;
 			game.visitor.championshipWins = 0;
 			game.home.championshipLosses = 0;
-			game.visitor.championshipLosses = 0;			
+			game.visitor.championshipLosses = 0;	
+
+			if (!game.home.history) {
+				gameObj.CreateHistory(game.home);
+			}
+
+			if (!game.visitor.history) {
+				gameObj.CreateHistory(game.visitor);
+			}			
 		}
 
 		board.updateRecords();
@@ -27,6 +35,16 @@ var _game = {
 				resolve(true);
 			});	
 		});
+	},
+	CreateHistory: function(team) {
+		team.history = {
+			wins: 0,
+			losses: 0,
+			championships: 0,
+			divisionChampionships: 0,
+			undefeatedSeasons: 0,
+			winlessSeasons: 0
+		};
 	},
 	PlayChampionShip: function(headsChamp, tailsChamp, board) {
 		var gameObj = this;
@@ -168,6 +186,7 @@ var _game = {
 					}
 
 					board.updateRecords();
+					console.log(winner);
 					resolve(winner);
 				});
 			}
