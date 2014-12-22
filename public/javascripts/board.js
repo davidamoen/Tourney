@@ -18,7 +18,6 @@ var _board = {
 					var tailsIdx = Math.floor(arr.length * Math.random());
 					teams.tails.push(arr.splice(tailsIdx, 1)[0]);					
 				}
-
 				boardObj.initTeams(teams);
 				boardObj.drawLogosInitial();
 				boardObj.updateRecords();
@@ -30,17 +29,37 @@ var _board = {
 			this.drawGrid();
 		},
 		initTeams: function(teams) {
+			var boardObj = this;
 			for(i = 0; i < teams.heads.length; i++) {
 				var headsTeam = teams.heads[i];
 				var tailssTeam = teams.tails[i];
 				headsTeam.wins = 0;
 				headsTeam.losses = 0;
 				tailssTeam.wins = 0;
-				tailssTeam.losses = 0;				
+				tailssTeam.losses = 0;			
+
+				if (!headsTeam.history) {
+					boardObj.createHistory(headsTeam);
+				}
+
+				if (!tailssTeam.history) {
+					boardObj.createHistory(tailssTeam);
+				}						
 			}
 
 			this.teams = teams;
 		},
+		createHistory: function(team) {
+			team.history = {
+				wins: 0,
+				losses: 0,
+				championshipWins: 0,
+				championshipLosses: 0,
+				championships: 0,
+				divisionChampionships: 0,
+				undefeatedSeasons: 0
+			};
+		},		
 		drawGrid: function() {
 			var center = this.getCenterPoint();
 			var margin = 20;
@@ -72,7 +91,7 @@ var _board = {
 				var headsTeam = headsDivision[i];
 				var tailsTeam = tailsDivision[i];
 				var ycoord = (i * 200);
-				var xcoord = 40;
+				var xcoord = 50;
 
 				this.drawLogo(
 					{name: headsTeam.name, color: headsTeam.color, background: headsTeam.background, image: headsTeam.image}, 
@@ -82,8 +101,8 @@ var _board = {
 					{name: tailsTeam.name, color: tailsTeam.color, background: tailsTeam.background, image: tailsTeam.image}, 
 					{x: xcoord, y: ycoord}, this.column2, 'large');
 
-	            context1.fillText(headsTeam.name, xcoord+60, ycoord+145);	
-	            context2.fillText(tailsTeam.name, xcoord+60, ycoord+145);	
+	            context1.fillText(headsTeam.name, xcoord+40, ycoord+105);	
+	            context2.fillText(tailsTeam.name, xcoord+40, ycoord+105);	
 
 			}
 		},
@@ -101,15 +120,38 @@ var _board = {
 				// cover up previous record
 				context.beginPath();
 				context.fillStyle = "#006B00";
-				context.fillRect(xCoord-20, yCoord-48, 200, 20);
+				// context.fillStyle = "#fff";
+				context.fillRect(xCoord-40, yCoord-88, 200, 80);
 
 				// write the current record
-				var content = 'Wins: ' + team.wins + ', Losses: ' + team.losses;
-	            context.font = '12pt Arial Black';
+				var content = 'Season: ' + team.wins + ' - ' + team.losses;
+	            context.font = '11pt Arial Black';
 	            context.fillStyle = '#000';
 	            context.textAlign = 'align';
 	            
-	            context.fillText(content, xCoord+65, yCoord-30);				
+	            context.fillText(content, xCoord+55, yCoord-70);		
+
+	            // write history
+				var content = 'Overall: ' + (team.history.wins + team.history.championshipWins) + ' - ' + (team.history.losses + team.history.championshipLosses);
+	            context.font = '11pt Arial Black';
+	            context.fillStyle = '#000';
+	            context.textAlign = 'align';
+	            
+	            context.fillText(content, xCoord+55, yCoord-50);	
+
+				var content = 'Division Champions: ' + team.history.divisionChampionships;
+	            context.font = '11pt Arial Black';
+	            context.fillStyle = '#000';
+	            context.textAlign = 'align';
+	            
+	            context.fillText(content, xCoord+55, yCoord-30);		   
+
+	            var content = 'Championships: ' + team.history.championships;
+	            context.font = '11pt Arial Black';
+	            context.fillStyle = '#000';
+	            context.textAlign = 'align';
+	            
+	            context.fillText(content, xCoord+55, yCoord-10);	
 			}
 		},
 		drawLine: function(coord1, coord2) {
@@ -123,7 +165,7 @@ var _board = {
 		},
 		drawLogo: function(team, coord, canvas, size) {
 			var context = canvas.getContext("2d");
-			var width = size == 'large' ? 125 : 65;
+			var width = size == 'large' ? 85 : 65;
 			var img = new Image();
 			img.src = '/images/' + team.image;
 			img.onload = function() {

@@ -3,11 +3,18 @@
 var startBtn = document.getElementById("startBtn");
 var selectTeams = document.getElementById("selectTeams");
 
+var history = {};
 var allTeams = [];
 $.getJSON('/history', function(data) {
-	data = JSON.parse(data);
+	for(var key in data) {
+		if (key == 'teams') break;
+		data = JSON.parse(key);
+	}
+
+	history = data;
 	allTeams = data.teams;
 	
+
 });
 
 var teams = {heads: [], tails: [] };
@@ -38,10 +45,27 @@ function setSchedule() {
 	_board.setup(teams);
 	
 	startBtn.addEventListener("click", function() {
-		_game.PlayRegularSeasonAsync(schedule, _board).then(function(result) {
+
+		var season = {regularSeason: [], championship: []};
+
+		_game.PlayRegularSeasonAsync(schedule, _board, season).then(function(result) {
 			_game.PlayoffsAsync(teams, _board).then(function(result) {
 				_game.PlayChampionShip(result.heads, result.tails, _board).then(function(champ) {
 					_board.message(champ.name + ' wins the championship!')
+
+					champ.history.championships++;
+
+					_board.updateRecords();
+
+					$.ajax({
+						type: "POST",
+						url: "/saveHistory",
+						data: JSON.stringify(history),
+						success: function(data) {
+							console.log(data);
+						},
+					});
+
 				});
 			});
 		});
