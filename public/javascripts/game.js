@@ -3,7 +3,7 @@ var _game = {
 	waitTime: 100,
 	scheduleIdx: 0,
 
-	PlayRegularSeasonAsync: function(schedule, board) {
+	PlayRegularSeasonAsync: function(schedule, board, season) {
 		var gameObj = this;
 		gameObj.scheduleIdx = 0;
 
@@ -17,20 +17,27 @@ var _game = {
 			game.home.championshipWins = 0;
 			game.visitor.championshipWins = 0;
 			game.home.championshipLosses = 0;
-			game.visitor.championshipLosses = 0;			
+			game.visitor.championshipLosses = 0;	
 		}
 
 		board.updateRecords();
 
 		return new Promise(function(resolve, reject) {
 			gameObj.PlayGames(schedule, board, function() {
-				resolve(true);
+				resolve(season);
 			});	
 		});
 	},
+
 	PlayChampionShip: function(headsChamp, tailsChamp, board) {
 		var gameObj = this;
 		gameObj.scheduleIdx = 0;
+
+		headsChamp.history.divisionChampionships++
+		tailsChamp.history.divisionChampionships++
+
+		if (headsChamp.losses == 0) headsChamp.history.undefeatedSeasons++;
+		if (tailsChamp.losses == 0) tailsChamp.history.undefeatedSeasons++;
 
 		var schedule = [
 			{home: headsChamp, visitor: tailsChamp},
@@ -132,7 +139,6 @@ var _game = {
 		var gameObj = this;
 		var game = schedule[gameObj.scheduleIdx];
 		var winsForChampionShip = Math.ceil(schedule.length/2);
-		console.log(winsForChampionShip + ' wins needed');
 
 		board.message('Championship Game # ' + (gameObj.scheduleIdx+1) +': ' + game.home.name + ' ('+ game.home.championshipWins + ' wins) vs ' + game.visitor.name + ' (' + game.visitor.championshipWins + ' wins)');
  
@@ -159,11 +165,15 @@ var _game = {
 					if (game.home.score == 7) {
 						game.home.wins++;
 						game.visitor.losses++;
+						game.home.history.wins++;
+						game.visitor.history.losses++;						
 						winner = game.home;
 					}
 					else {
 						game.home.losses++;
 						game.visitor.wins++;
+						game.home.history.losses++;
+						game.visitor.history.wins++;						
 						winner = game.visitor;
 					}
 
@@ -189,11 +199,15 @@ var _game = {
 					if (game.home.score == 7) {
 						game.home.championshipWins++;
 						game.visitor.championshipLosses++;
+						game.home.history.championshipWins++;
+						game.visitor.history.championshipLosses++;						
 						winner = game.home;
 					}
 					else {
 						game.home.championshipLosses++;
 						game.visitor.championshipWins++;
+						game.home.history.championshipLosses++;
+						game.visitor.history.championshipWins++;						
 						winner = game.visitor;
 					}
 
