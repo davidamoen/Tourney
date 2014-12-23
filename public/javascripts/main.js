@@ -5,6 +5,8 @@ var selectTeams = document.getElementById("selectTeams");
 
 var history = {};
 var allTeams = [];
+var currentChamp = null;
+
 $.getJSON('/history', function(data) {
 	for(var key in data) {
 		if (key == 'teams') break;
@@ -13,8 +15,6 @@ $.getJSON('/history', function(data) {
 
 	history = data;
 	allTeams = data.teams;
-	
-
 });
 
 var teams = {heads: [], tails: [] };
@@ -52,9 +52,8 @@ function setSchedule() {
 			_game.PlayoffsAsync(teams, _board).then(function(result) {
 				_game.PlayChampionShip(result.heads, result.tails, _board).then(function(champ) {
 					_board.message(champ.name + ' wins the championship!')
-
 					champ.history.championships++;
-
+					currentChamp = champ;
 					_board.updateRecords();
 
 					$.ajax({
@@ -72,7 +71,7 @@ function setSchedule() {
 	});
 
 	selectTeams.addEventListener("click", function() {
-		_board.selectTeams(allTeams, teams).then(function(result) {
+		_board.selectTeams(allTeams, teams, currentChamp).then(function(result) {
 			teams = result;
 			setSchedule(teams);
 			_board.message('Now click "Start Season" to play');
