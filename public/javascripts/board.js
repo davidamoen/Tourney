@@ -1,8 +1,8 @@
 var _board = {
 		name: 'Promise POC',
 		canvas:  document.getElementById("grid"),
-		column1:  document.getElementById("division1"),
-		column2:  document.getElementById("division2"),
+		column1: document.getElementById("division1"),
+		column2: document.getElementById("division2"),
 		message: document.getElementById('message'),
 		selectTeams: function(allTeams, teams, champ) {
 			var boardObj = this;
@@ -16,6 +16,7 @@ var _board = {
 					// get the heads team last champion for the first spot if they exist
 					var headsIdx = Math.floor(arr.length * Math.random());
 					if (i == 0 && champ) {
+						champ.isChamp = true;
 						headsIdx = boardObj.getChampIndex(champ, arr);
 					}
 
@@ -50,7 +51,9 @@ var _board = {
 				headsTeam.wins = 0;
 				headsTeam.losses = 0;
 				tailssTeam.wins = 0;
-				tailssTeam.losses = 0;			
+				tailssTeam.losses = 0;	
+				headsTeam.isChamp = headsTeam.isChamp ? true : false;
+				tailssTeam.isChamp = false;		
 
 				if (!headsTeam.history) {
 					boardObj.createHistory(headsTeam);

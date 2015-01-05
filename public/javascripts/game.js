@@ -156,8 +156,20 @@ var _game = {
 		var gameObj = this;
 		return new Promise(function(resolve, reject) {
 			try {
-				game.home.score = 0;
-				game.visitor.score = 0;
+				if (game.home.isChamp) {
+					game.home.score = 2;
+				}
+				else {
+					game.home.score = 0;	
+				}
+				
+				if (game.visitor.isChamp) {
+					game.visitor.score = 2;
+				}
+				else {
+					game.visitor.score = 0;	
+				}
+				
 				board.setupPiecesForGame(game);
 				var winner = null;
 
