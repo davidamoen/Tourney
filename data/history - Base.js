@@ -41,7 +41,6 @@
 				{"name": "Baylor", "image": "baylor.png"},
 				{"name": "Notre Dame", "image": "notredame.png"},
 				{"name": "Oklahoma St", "image": "osu.png"},
-				{"name": "Texas A&M", "image": "tam.png"},
 				{"name": "Kentucky", "image": "kentucky.png"},
 				{"name": "Florida", "image": "florida.png"},
 				{"name": "Wake Forest", "image": "wake.png"},

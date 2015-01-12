@@ -157,14 +157,14 @@ var _game = {
 		return new Promise(function(resolve, reject) {
 			try {
 				if (game.home.isChamp) {
-					game.home.score = 2;
+					game.home.score = 1;
 				}
 				else {
 					game.home.score = 0;	
 				}
 				
 				if (game.visitor.isChamp) {
-					game.visitor.score = 2;
+					game.visitor.score = 1;
 				}
 				else {
 					game.visitor.score = 0;	
