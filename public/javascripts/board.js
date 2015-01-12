@@ -25,6 +25,7 @@ var _board = {
 					var tailsIdx = Math.floor(arr.length * Math.random());
 					teams.tails.push(arr.splice(tailsIdx, 1)[0]);					
 				}
+				boardObj.clearBoard();
 				boardObj.initTeams(teams);
 				boardObj.drawLogosInitial();
 				boardObj.updateRecords();
@@ -196,17 +197,17 @@ var _board = {
 			context.fillStyle = "#006B00";
 			context.fillRect(coord.x+2, coord.y, width, 65);
 		},
-		setupPiecesForGame: function(game) {
-			
+		clearBoard: function() {
 			for (i = 0; i < 8; i++) {
 				var yCoord = 565 - (i * (600/8)) -37;
 				var homeCoord = {x: 1, y: yCoord};
 				var visitorCoord = {x: 301, y: yCoord};
-
 				this.removeLogo(homeCoord, this.canvas, 'small');
 				this.removeLogo(visitorCoord, this.canvas, 'small');
-			}
-
+			}			
+		},
+		setupPiecesForGame: function(game) {
+			this.clearBoard();
 			this.moveGamePiece(game.home, true);
 			this.moveGamePiece(game.visitor, false);
 
